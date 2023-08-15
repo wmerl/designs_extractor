@@ -1,0 +1,9 @@
+asyncpg
+Pillow
+pyaes
+Pyrogram
+PySocks
+six
+TgCrypto
+requests
+beautifulsoup4
