@@ -40,7 +40,7 @@ async def extractor(c, m):
             final_url = partials[0].replace('A13usaonutL._CLa%7C2140%2C2000%7C', '')
             break
 
-        if f'{amazon_url}images/I/A1ntnF3PJOL._CLa%7C500%2C468%7C' in word:
+        if f'{amazon_url}A1ntnF3PJOL._CLa%7C500%2C468%7C' in word:
             partials = word.split('.png')
             final_url = partials[0].replace('A1ntnF3PJOL._CLa%7C500%2C468%7C', '')
             break
@@ -53,6 +53,11 @@ async def extractor(c, m):
         if f'{amazon_url}A1AorHE3PxL._CLa%7C2140%2C2000%7C' in word:
             partials = word.split('.png')
             final_url = partials[0].replace('A1AorHE3PxL._CLa%7C2140%2C2000%7C', '')
+            break
+
+        if f'{amazon_url}B1qmQK-r4OS._CLa%7C2140%2C2000%7C' in word:
+            partials = word.split('.png')
+            final_url = partials[0].replace('B1qmQK-r4OS._CLa%7C2140%2C2000%7C', '')
             break
 
     await c.send_photo(chat_id, final_url + '.png')
