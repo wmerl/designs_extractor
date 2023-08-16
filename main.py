@@ -4,6 +4,7 @@ from pyrogram import Client, filters, enums
 from bs4 import BeautifulSoup
 
 app = Client("Yplatinum", api_id=20782961, api_hash="c68f73d3dc4c383a155cb167426c68d4", bot_token="6244633840:AAGKdF_SBD3DjYEEx0n5EEzyTFntcb9QOfQ")
+amazon_url = "https://m.media-amazon.com/images/I/"
 
 headers = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -34,17 +35,22 @@ async def extractor(c, m):
     final_url = ''
 
     for word in urls:
-        if 'https://m.media-amazon.com/images/I/A13usaonutL._CLa%7C2140%2C2000%7C' in word:
+        if f'{amazon_url}A13usaonutL._CLa%7C2140%2C2000%7C' in word:
             partials = word.split('.png')
             final_url = partials[0].replace('A13usaonutL._CLa%7C2140%2C2000%7C', '')
             break
 
-        if 'https://m.media-amazon.com/images/I/A1ntnF3PJOL._CLa%7C500%2C468%7C' in word:
+        if f'{amazon_url}images/I/A1ntnF3PJOL._CLa%7C500%2C468%7C' in word:
             partials = word.split('.png')
             final_url = partials[0].replace('A1ntnF3PJOL._CLa%7C500%2C468%7C', '')
             break
 
-        if 'https://m.media-amazon.com/images/I/A1vJUKBjc2L._CLa%7C2140%2C2000%7C' in word:
+        if f'{amazon_url}A1vJUKBjc2L._CLa%7C2140%2C2000%7C' in word:
+            partials = word.split('.png')
+            final_url = partials[0].replace('A1vJUKBjc2L._CLa%7C2140%2C2000%7C', '')
+            break
+
+        if f'{amazon_url}A1AorHE3PxL._CLa%7C2140%2C2000%7C' in word:
             partials = word.split('.png')
             final_url = partials[0].replace('A1vJUKBjc2L._CLa%7C2140%2C2000%7C', '')
             break
