@@ -32,45 +32,15 @@ async def extractor(c, m):
     soup = BeautifulSoup(response.content, 'html.parser')
 
     urls = str(soup).split("var obj = jQuery.parseJSON('")[1].split('"')
-    final_url = ''
+    file_name = None
 
     for word in urls:
-        if f'{amazon_url}A13usaonutL._CLa%7C2140%2C2000%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('A13usaonutL._CLa%7C2140%2C2000%7C', '')
+        if '._CLa%7C' in word:
+            file_name = word.split('.png')[0].split('%7C')[-1]
             break
 
-        if f'{amazon_url}A1ntnF3PJOL._CLa%7C500%2C468%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('A1ntnF3PJOL._CLa%7C500%2C468%7C', '')
-            break
+    await c.send_photo(chat_id,amazon_url + file_name + '.png') if file_name else print('Error')
 
-        if f'{amazon_url}A1vJUKBjc2L._CLa%7C2140%2C2000%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('A1vJUKBjc2L._CLa%7C2140%2C2000%7C', '')
-            break
-
-        if f'{amazon_url}A1AorHE3PxL._CLa%7C2140%2C2000%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('A1AorHE3PxL._CLa%7C2140%2C2000%7C', '')
-            break
-
-        if f'{amazon_url}B1qmQK-r4OS._CLa%7C2140%2C2000%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('B1qmQK-r4OS._CLa%7C2140%2C2000%7C', '')
-            break
-
-        if f'{amazon_url}A1jKzO+1adL._CLa%7C2140%2C2000%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('A1jKzO+1adL._CLa%7C2140%2C2000%7C', '')
-            break
-
-        if f'{amazon_url}B1UOGf+zWMS._CLa%7C2140%2C2000%7C' in word:
-            partials = word.split('.png')
-            final_url = partials[0].replace('B1UOGf+zWMS._CLa%7C2140%2C2000%7C', '')
-            break
-
-    await c.send_photo(chat_id, final_url + '.png')
 
 print("I'm live !!")
 app.run()
