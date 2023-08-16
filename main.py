@@ -60,6 +60,11 @@ async def extractor(c, m):
             final_url = partials[0].replace('B1qmQK-r4OS._CLa%7C2140%2C2000%7C', '')
             break
 
+        if f'{amazon_url}A1jKzO+1adL._CLa%7C2140%2C2000%7C' in word:
+            partials = word.split('.png')
+            final_url = partials[0].replace('A1jKzO+1adL._CLa%7C2140%2C2000%7C', '')
+            break
+
     await c.send_photo(chat_id, final_url + '.png')
 
 print("I'm live !!")
