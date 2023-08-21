@@ -1,10 +1,15 @@
-import requests
-
-from pyrogram import Client, filters, enums
+from pyrogram import Client, filters, enums, idle
 from bs4 import BeautifulSoup
+from flask import Flask
 
-app = Client("Yplatinum", api_id=20782961, api_hash="c68f73d3dc4c383a155cb167426c68d4", bot_token="6244633840:AAGKdF_SBD3DjYEEx0n5EEzyTFntcb9QOfQ")
+import requests
+import threading
+
+app = Flask(__name__)
+
+bot = Client("Yplatinum", api_id=20782961, api_hash="c68f73d3dc4c383a155cb167426c68d4", bot_token="6244633840:AAGKdF_SBD3DjYEEx0n5EEzyTFntcb9QOfQ")
 amazon_url = "https://m.media-amazon.com/images/I/"
+session = requests.Session()
 
 headers = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -14,20 +19,24 @@ headers = {
 }
 
 
-@app.on_message(filters.command(['start']) & filters.private)
+@app.route('/')
+async def home():
+    return 'Hello world !'
+
+
+@bot.on_message(filters.command(['start']) & filters.private)
 async def start(c, m):
     chat_id = m.chat.id
-    await app.send_chat_action(chat_id, enums.ChatAction.TYPING)
+    await bot.send_chat_action(chat_id, enums.ChatAction.TYPING)
 
     await m.reply_text("Hello, send the listing URL, and let's work !!")
 
 
-@app.on_message(filters.text & filters.private)
+@bot.on_message(filters.text & filters.private)
 async def extractor(c, m):
     message = str(m.text.strip())
     chat_id = m.chat.id
 
-    session = requests.Session()
     response = session.get(message, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -39,8 +48,13 @@ async def extractor(c, m):
             file_name = word.split('.png')[0].split('%7C')[-1]
             break
 
-    await c.send_photo(chat_id,amazon_url + file_name + '.png') if file_name else print('Error')
+    await c.send_photo(chat_id, amazon_url + file_name + '.png') if file_name else print('Error')
 
 
-print("I'm live !!")
-app.run()
+if __name__ == "__main__":
+    bot.start()
+    print("I'm live !!")
+    threading.Thread(target=app.run, args=("0.0.0.0", 8080), daemon=True).start()
+    idle()
+    bot.stop()
+
