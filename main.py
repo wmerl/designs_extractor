@@ -20,7 +20,7 @@ headers = {
 
 
 @app.route('/')
-async def home():
+def home():
     return 'Hello world !'
 
 
